@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.6 on darwin)" generated="20240530 16:48:03.663" rpa="false" schemaversion="4">
+<suite id="s1" name="Automation api" source="/Users/jessica.pimentel/Desktop/Automation_api">
+<suite id="s1-s1" name="Api" source="/Users/jessica.pimentel/Desktop/Automation_api/api.robot">
+<test id="s1-s1-t1" name="Create User - API" line="26">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias= teste_API</arg>
+<arg>url= https://serverest.dev</arg>
+<arg>headers=${headers}</arg>
+<arg>disable_warnings= true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240530 16:48:03.745" level="INFO">Creating Session using : alias= teste_API, url= https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20240530 16:48:03.745" endtime="20240530 16:48:03.745"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>alias= teste_API</arg>
+<arg>url= /usuarios</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20240530 16:48:04.265" level="INFO">POST Request : url=https://serverest.dev/usuarios 
+ path_url=/usuarios 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '108'} 
+ body=b'{"nome": "Fulano da Silva", "email": "beltrano1875@qa.com.br", "password": "teste", "administrador": "true"}' 
+ </msg>
+<msg timestamp="20240530 16:48:04.266" level="INFO">POST Response : url=https://serverest.dev/usuarios 
+ status=201, reason=Created 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': '5bbcc12e3ce47be9a3445a1848c273ca;o=1', 'Date': 'Thu, 30 May 2024 19:48:04 GMT', 'Server': 'Google Frontend', 'Content-Length': '82'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "iuA1cfsbTXKZtgIc"
+} 
+ </msg>
+<msg timestamp="20240530 16:48:04.266" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20240530 16:48:03.745" endtime="20240530 16:48:04.266"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>201</arg>
+<arg>msg=Cadastro realizado com sucesso</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20240530 16:48:04.267" endtime="20240530 16:48:04.268"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240530 16:48:04.270" level="INFO">{'message': 'Cadastro realizado com sucesso', '_id': 'iuA1cfsbTXKZtgIc'}</msg>
+<status status="PASS" starttime="20240530 16:48:04.268" endtime="20240530 16:48:04.270"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${_id}</var>
+<arg>${response.json()}</arg>
+<arg>_id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20240530 16:48:04.271" level="INFO">${_id} = iuA1cfsbTXKZtgIc</msg>
+<status status="PASS" starttime="20240530 16:48:04.271" endtime="20240530 16:48:04.271"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${id}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20240530 16:48:04.272" endtime="20240530 16:48:04.274"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${id_global}</arg>
+<arg>${id}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20240530 16:48:04.276" level="INFO">${id_global} = iuA1cfsbTXKZtgIc</msg>
+<status status="PASS" starttime="20240530 16:48:04.275" endtime="20240530 16:48:04.276"/>
+</kw>
+<status status="PASS" starttime="20240530 16:48:03.744" endtime="20240530 16:48:04.276"/>
+</test>
+<test id="s1-s1-t2" name="Read User - API" line="37">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias= teste_API</arg>
+<arg>url= https://serverest.dev</arg>
+<arg>headers=${headers}</arg>
+<arg>disable_warnings= true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240530 16:48:04.278" level="INFO">Creating Session using : alias= teste_API, url= https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20240530 16:48:04.278" endtime="20240530 16:48:04.278"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>alias= teste_API</arg>
+<arg>url= /usuarios/${id_global}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20240530 16:48:04.805" level="INFO">GET Request : url=https://serverest.dev/usuarios/iuA1cfsbTXKZtgIc 
+ path_url=/usuarios/iuA1cfsbTXKZtgIc 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json'} 
+ body=None 
+ </msg>
+<msg timestamp="20240530 16:48:04.805" level="INFO">GET Response : url=https://serverest.dev/usuarios/iuA1cfsbTXKZtgIc 
+ status=200, reason=OK 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': '9d07da3c93babe8a2aea662b9325c5ba', 'Date': 'Thu, 30 May 2024 19:48:05 GMT', 'Server': 'Google Frontend', 'Content-Length': '157'} 
+ body={
+    "nome": "Fulano da Silva",
+    "email": "beltrano1875@qa.com.br",
+    "password": "teste",
+    "administrador": "true",
+    "_id": "iuA1cfsbTXKZtgIc"
+} 
+ </msg>
+<msg timestamp="20240530 16:48:04.806" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20240530 16:48:04.279" endtime="20240530 16:48:04.806"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>msg=${id_global}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20240530 16:48:04.806" endtime="20240530 16:48:04.807"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240530 16:48:04.808" level="INFO">{'nome': 'Fulano da Silva', 'email': 'beltrano1875@qa.com.br', 'password': 'teste', 'administrador': 'true', '_id': 'iuA1cfsbTXKZtgIc'}</msg>
+<status status="PASS" starttime="20240530 16:48:04.808" endtime="20240530 16:48:04.809"/>
+</kw>
+<status status="PASS" starttime="20240530 16:48:04.277" endtime="20240530 16:48:04.809"/>
+</test>
+<test id="s1-s1-t3" name="UpDate User - API" line="46">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias= teste_API</arg>
+<arg>url= https://serverest.dev</arg>
+<arg>headers=${headers}</arg>
+<arg>disable_warnings= true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240530 16:48:04.811" level="INFO">Creating Session using : alias= teste_API, url= https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20240530 16:48:04.811" endtime="20240530 16:48:04.812"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>alias= teste_API</arg>
+<arg>url= /usuarios/${id_global}</arg>
+<arg>json=${newBody}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20240530 16:48:05.328" level="INFO">PUT Request : url=https://serverest.dev/usuarios/iuA1cfsbTXKZtgIc 
+ path_url=/usuarios/iuA1cfsbTXKZtgIc 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '107'} 
+ body=b'{"nome": "Fulano da Silva", "email": "cicrano1266@qa.com.br", "password": "teste", "administrador": "true"}' 
+ </msg>
+<msg timestamp="20240530 16:48:05.329" level="INFO">PUT Response : url=https://serverest.dev/usuarios/iuA1cfsbTXKZtgIc 
+ status=200, reason=OK 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': 'b11389236ff44460fc5dc190fc175eef', 'Date': 'Thu, 30 May 2024 19:48:05 GMT', 'Server': 'Google Frontend', 'Content-Length': '50'} 
+ body={
+    "message": "Registro alterado com sucesso"
+} 
+ </msg>
+<msg timestamp="20240530 16:48:05.330" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20240530 16:48:04.812" endtime="20240530 16:48:05.330"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>msg=Registro alterado com sucesso</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20240530 16:48:05.331" endtime="20240530 16:48:05.332"/>
+</kw>
+<status status="PASS" starttime="20240530 16:48:04.810" endtime="20240530 16:48:05.333"/>
+</test>
+<test id="s1-s1-t4" name="Delete User - API" line="53">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias= teste_API</arg>
+<arg>url= https://serverest.dev</arg>
+<arg>headers=${headers}</arg>
+<arg>disable_warnings= true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240530 16:48:05.335" level="INFO">Creating Session using : alias= teste_API, url= https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20240530 16:48:05.335" endtime="20240530 16:48:05.336"/>
+</kw>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>alias= teste_API</arg>
+<arg>url= /usuarios/${id_global}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20240530 16:48:05.833" level="INFO">DELETE Request : url=https://serverest.dev/usuarios/iuA1cfsbTXKZtgIc 
+ path_url=/usuarios/iuA1cfsbTXKZtgIc 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20240530 16:48:05.834" level="INFO">DELETE Response : url=https://serverest.dev/usuarios/iuA1cfsbTXKZtgIc 
+ status=200, reason=OK 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': 'b966f62387a45a6cd124147ced81cd37', 'Date': 'Thu, 30 May 2024 19:48:06 GMT', 'Server': 'Google Frontend', 'Content-Length': '51'} 
+ body={
+    "message": "Registro excluído com sucesso"
+} 
+ </msg>
+<msg timestamp="20240530 16:48:05.834" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20240530 16:48:05.336" endtime="20240530 16:48:05.835"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>msg=Registro excluído com sucesso</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20240530 16:48:05.837" endtime="20240530 16:48:05.838"/>
+</kw>
+<status status="PASS" starttime="20240530 16:48:05.334" endtime="20240530 16:48:05.839"/>
+</test>
+<status status="PASS" starttime="20240530 16:48:03.675" endtime="20240530 16:48:05.841"/>
+</suite>
+<status status="PASS" starttime="20240530 16:48:03.665" endtime="20240530 16:48:05.842"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="0" skip="0" id="s1" name="Automation api">Automation api</stat>
+<stat pass="4" fail="0" skip="0" id="s1-s1" name="Api">Automation api.Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

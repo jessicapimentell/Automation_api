@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.11.6 on darwin)" generated="20240530 18:21:48.033" rpa="false" schemaversion="4">
+<suite id="s1" name="Api" source="/Users/jessica.pimentel/Desktop/Automation_api/api.robot">
+<test id="s1-t1" name="Login - API" line="74">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias= teste_API</arg>
+<arg>url= https://serverest.dev</arg>
+<arg>headers=${headers}</arg>
+<arg>disable_warnings= true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240530 18:21:48.118" level="INFO">Creating Session using : alias= teste_API, url= https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20240530 18:21:48.118" endtime="20240530 18:21:48.118"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>alias= teste_API</arg>
+<arg>url= /login</arg>
+<arg>json=${loginBody}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20240530 18:21:48.580" level="INFO">POST Request : url=https://serverest.dev/login 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '56'} 
+ body=b'{"email": "jfcmpteste@qa.com.br", "password": "1234567"}' 
+ </msg>
+<msg timestamp="20240530 18:21:48.580" level="INFO">POST Response : url=https://serverest.dev/login 
+ status=200, reason=OK 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': '930a4e82375d2c6bc060a38a78a63581', 'Date': 'Thu, 30 May 2024 21:21:48 GMT', 'Server': 'Google Frontend', 'Content-Length': '277'} 
+ body={
+    "message": "Login realizado com sucesso",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpmY21wdGVzdGVAcWEuY29tLmJyIiwicGFzc3dvcmQiOiIxMjM0NTY3IiwiaWF0IjoxNzE3MTA0MTA4LCJleHAiOjE3MTcxMDQ3MDh9.U0OL7HCmEdCZIoJS2WclOa8m1hrd6qcx7eL6nzLzvWA"
+} 
+ </msg>
+<msg timestamp="20240530 18:21:48.580" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20240530 18:21:48.118" endtime="20240530 18:21:48.580"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>msg=Login realizado com sucesso</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20240530 18:21:48.581" endtime="20240530 18:21:48.582"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240530 18:21:48.583" level="INFO">{'message': 'Login realizado com sucesso', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpmY21wdGVzdGVAcWEuY29tLmJyIiwicGFzc3dvcmQiOiIxMjM0NTY3IiwiaWF0IjoxNzE3MTA0MTA4LCJleHAiOjE3MTcxMDQ3MDh9.U0OL7HCmEdCZIoJS2WclOa8m1hrd6qcx7eL6nzLzvWA'}</msg>
+<status status="PASS" starttime="20240530 18:21:48.582" endtime="20240530 18:21:48.583"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${authorization}</var>
+<arg>${response.json()}</arg>
+<arg>authorization</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20240530 18:21:48.584" level="INFO">${authorization} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpmY21wdGVzdGVAcWEuY29tLmJyIiwicGFzc3dvcmQiOiIxMjM0NTY3IiwiaWF0IjoxNzE3MTA0MTA4LCJleHAiOjE3MTcxMDQ3MDh9.U0OL7HCmEdCZIoJS2WclOa8m1hrd6qcx7eL6nzL...</msg>
+<status status="PASS" starttime="20240530 18:21:48.583" endtime="20240530 18:21:48.584"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${_authorization}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20240530 18:21:48.584" endtime="20240530 18:21:48.585"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${authorization_global}</arg>
+<arg>${_authorization}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20240530 18:21:48.586" level="INFO">${authorization_global} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpmY21wdGVzdGVAcWEuY29tLmJyIiwicGFzc3dvcmQiOiIxMjM0NTY3IiwiaWF0IjoxNzE3MTA0MTA4LCJleHAiOjE3MTcxMDQ3MDh9.U0OL7HCmEdCZIoJS2WclOa8m1hrd6qcx7eL6nzL...</msg>
+<status status="PASS" starttime="20240530 18:21:48.585" endtime="20240530 18:21:48.586"/>
+</kw>
+<tag>Login</tag>
+<status status="PASS" starttime="20240530 18:21:48.118" endtime="20240530 18:21:48.586"/>
+</test>
+<test id="s1-t2" name="Cadastro - API" line="87">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${var}</var>
+<arg>accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=${authorization_global}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20240530 18:21:48.587" level="INFO">${var} = {'accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpmY21wdGVzdGVAcWEuY29tLmJyIiwicGFzc3dvcmQiOiIxMjM0NTY3Iiw...</msg>
+<status status="PASS" starttime="20240530 18:21:48.586" endtime="20240530 18:21:48.587"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias= teste_API</arg>
+<arg>url= https://serverest.dev</arg>
+<arg>headers=${var}</arg>
+<arg>disable_warnings= true</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240530 18:21:48.587" level="INFO">Creating Session using : alias= teste_API, url= https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpmY21wdGVzdGVAcWEuY29tLmJyIiwicGFzc3dvcmQiOiIxMjM0NTY3IiwiaWF0IjoxNzE3MTA0MTA4LCJleHAiOjE3MTcxMDQ3MDh9.U0OL7HCmEdCZIoJS2WclOa8m1hrd6qcx7eL6nzLzvWA'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20240530 18:21:48.587" endtime="20240530 18:21:48.588"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>alias= teste_API</arg>
+<arg>url=/produtos</arg>
+<arg>json=${products}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20240530 18:21:49.094" level="INFO">POST Request : url=https://serverest.dev/produtos 
+ path_url=/produtos 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpmY21wdGVzdGVAcWEuY29tLmJyIiwicGFzc3dvcmQiOiIxMjM0NTY3IiwiaWF0IjoxNzE3MTA0MTA4LCJleHAiOjE3MTcxMDQ3MDh9.U0OL7HCmEdCZIoJS2WclOa8m1hrd6qcx7eL6nzLzvWA', 'Content-Length': '91'} 
+ body=b'{"nome": "\\"Desodor\\"", "preco": "14", "descricao": "\\"Perfumariaa\\"", "quantidade": "100"}' 
+ </msg>
+<msg timestamp="20240530 18:21:49.095" level="INFO">POST Response : url=https://serverest.dev/produtos 
+ status=201, reason=Created 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': 'c0fa819b76512a0033e5748a12109391', 'Date': 'Thu, 30 May 2024 21:21:49 GMT', 'Server': 'Google Frontend', 'Content-Length': '82'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "xpNznKQ4AdTZbNhd"
+} 
+ </msg>
+<msg timestamp="20240530 18:21:49.096" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20240530 18:21:48.588" endtime="20240530 18:21:49.096"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>201</arg>
+<arg>msg=Cadastro realizado com sucesso</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20240530 18:21:49.097" endtime="20240530 18:21:49.097"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240530 18:21:49.098" level="INFO">{'message': 'Cadastro realizado com sucesso', '_id': 'xpNznKQ4AdTZbNhd'}</msg>
+<status status="PASS" starttime="20240530 18:21:49.097" endtime="20240530 18:21:49.098"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${_idProduct}</var>
+<arg>${response.json()}</arg>
+<arg>_id</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20240530 18:21:49.099" level="INFO">${_idProduct} = xpNznKQ4AdTZbNhd</msg>
+<status status="PASS" starttime="20240530 18:21:49.098" endtime="20240530 18:21:49.099"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${idProduct}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20240530 18:21:49.099" endtime="20240530 18:21:49.099"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${idProduct_global}</arg>
+<arg>${idProduct}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20240530 18:21:49.100" level="INFO">${idProduct_global} = xpNznKQ4AdTZbNhd</msg>
+<status status="PASS" starttime="20240530 18:21:49.099" endtime="20240530 18:21:49.100"/>
+</kw>
+<tag>CadastroProduto</tag>
+<status status="PASS" starttime="20240530 18:21:48.586" endtime="20240530 18:21:49.101"/>
+</test>
+<status status="PASS" starttime="20240530 18:21:48.034" endtime="20240530 18:21:49.101"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">CadastroProduto</stat>
+<stat pass="1" fail="0" skip="0">Login</stat>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Api">Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
